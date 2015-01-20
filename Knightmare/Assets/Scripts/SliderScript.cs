@@ -10,7 +10,8 @@ public class SliderScript : MonoBehaviour {
 	public Vector3 maxPos;
 	public float length;
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 		minPos = this.transform.position;
 		minPos.x=this.transform.position.x - this.transform.localScale.x * 0.5f;
 		maxPos = this.transform.position ;
@@ -23,7 +24,8 @@ public class SliderScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 		/*if(Input.GetKeyDown(KeyCode.K))
 		{
 			currentValue+=(maxValue-minValue)*0.01f;
@@ -36,5 +38,17 @@ public class SliderScript : MonoBehaviour {
 		float posRatio = currentValue / (maxValue - minValue);
 		sliderKnob.transform.position = new Vector3 (minPos.x + length * posRatio, sliderKnob.transform.position.y, sliderKnob.transform.position.z);
 
+		foreach(Touch touch in Input.touches)
+		{
+			{
+				Vector3 dir=new Vector3(touch.position.x/Screen.width-sliderKnob.transform.position.x,0,0);
+				//newPos.x=touch.position.x;
+				//newPos.y/=Screen.height;
+				Vector3 newPos=sliderKnob.transform.position+dir;
+				sliderKnob.transform.position=newPos;
+				newPos.z=sliderKnob.transform.position.z;
+				float nPosRatio=(sliderKnob.transform.position.x-minPos.x)/(maxPos.x-minPos.x);
+			}
+		}
 	}
 }

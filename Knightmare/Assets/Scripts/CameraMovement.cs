@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class CameraMovement : MonoBehaviour {
-	public Camera OptionsPan;
-	public Camera MainPan;
+	public GameObject OptionsPan;
+	public GameObject MainPan;
 	private Vector3 Target;
 	public float panSpeed=1;
 	bool move;
