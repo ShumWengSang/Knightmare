@@ -5,6 +5,7 @@ public class SliderScript : MonoBehaviour {
 	public float maxValue=100;
 	public float minValue=0;
 	public float currentValue=0;
+	float targetValue;
 	public GameObject sliderKnob;
 	public Vector3 minPos;
 	public Vector3 maxPos;
@@ -21,8 +22,29 @@ public class SliderScript : MonoBehaviour {
 		maxPos.z = sliderKnob.transform.position.z;
 		//sliderKnob.transform.position.Set (minPos.x, minPos.y, minPos.z);
 		sliderKnob.transform.position = new Vector3 (minPos.x, minPos.y, minPos.z);
+		targetValue = currentValue;
 	}
-	
+
+	public void MoveKnob(Vector3 position)
+	{
+		Vector3 worldPos=Camera.main.ScreenToWorldPoint((Vector3)(position));
+		{
+			//Camera.main.ScreenToWorldPoint(Input.GetTouch(0)
+			Vector3 dir=new Vector3(worldPos.x-sliderKnob.transform.position.x,0,0);
+			//newPos.x=touch.position.x;
+			//newPos.y/=Screen.height;
+			Vector3 newPos=sliderKnob.transform.position+dir;
+			if(newPos.x<maxPos.x&&newPos.x>minPos.x)
+			{
+				//sliderKnob.transform.position=newPos;
+				//newPos.z=sliderKnob.transform.position.z;
+				float nPosRatio=(newPos.x-minPos.x)/(maxPos.x-minPos.x);
+				targetValue=minValue+(maxValue-minValue)*nPosRatio;
+				currentValue=minValue+(maxValue-minValue)*nPosRatio;
+			}
+		}
+	}
+
 	// Update is called once per frame
 	void Update () 
 	{
@@ -34,21 +56,20 @@ public class SliderScript : MonoBehaviour {
 		{
 			currentValue-=(maxValue-minValue)*0.01f;
 		}*/
-		//float posRatio = 100;
-		float posRatio = currentValue / (maxValue - minValue);
-		sliderKnob.transform.position = new Vector3 (minPos.x + length * posRatio, sliderKnob.transform.position.y, sliderKnob.transform.position.z);
-
-		foreach(Touch touch in Input.touches)
+		float difference =  targetValue-currentValue;
+		if (Mathf.Abs (difference) > 1) 
 		{
-			{
-				Vector3 dir=new Vector3(touch.position.x/Screen.width-sliderKnob.transform.position.x,0,0);
-				//newPos.x=touch.position.x;
-				//newPos.y/=Screen.height;
-				Vector3 newPos=sliderKnob.transform.position+dir;
-				sliderKnob.transform.position=newPos;
-				newPos.z=sliderKnob.transform.position.z;
-				float nPosRatio=(sliderKnob.transform.position.x-minPos.x)/(maxPos.x-minPos.x);
-			}
+				currentValue += difference / Mathf.Abs (difference) * 100 * Time.deltaTime;
+				float posRatio = currentValue / (maxValue - minValue);
+				sliderKnob.transform.position = new Vector3 (minPos.x + length * posRatio, sliderKnob.transform.position.y, sliderKnob.transform.position.z);
 		}
+		else 
+		{
+			currentValue=targetValue;
+		}
+
+		//foreach(Touch touch in Input.touches)
+		//{
+		//}
 	}
 }
