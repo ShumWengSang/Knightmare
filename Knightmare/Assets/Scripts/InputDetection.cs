@@ -20,15 +20,25 @@ public class InputDetection : MonoBehaviour {
 			Vector3 worldPos = Camera.main.ScreenToWorldPoint ((Vector3)(touch.position));
 			worldPos.z = 0;
 			Collider[] hitCollider = Physics.OverlapSphere (worldPos, 0.5f);
-			foreach (Collider col in hitCollider) {
-					if (col.gameObject.CompareTag ("slider")) {
-							switch (touch.phase) {
-							case TouchPhase.Moved:
+			foreach (Collider col in hitCollider) 
+			{
+				if (col.gameObject.CompareTag ("slider")) 
+				{
+					foreach (Collider col2 in hitCollider)
+					{
+						if(col2.gameObject.CompareTag("sliderKnob"))
+						{
+							switch (touch.phase) 
+							{
+								case TouchPhase.Moved:
 									col.gameObject.GetComponent<SliderScript> ().MoveKnob (touch.position);
+								break;
+								case TouchPhase.Began:
 									break;
 							}
-							//if(touch.phase.(TouchPhase.Moved))
+						}
 					}
+				}
 			}
 		}
 #endif

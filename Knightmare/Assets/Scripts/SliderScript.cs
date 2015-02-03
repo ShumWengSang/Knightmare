@@ -41,6 +41,9 @@ public class SliderScript : MonoBehaviour {
 				float nPosRatio=(newPos.x-minPos.x)/(maxPos.x-minPos.x);
 				targetValue=minValue+(maxValue-minValue)*nPosRatio;
 				currentValue=minValue+(maxValue-minValue)*nPosRatio;
+				float posRatio = currentValue / (maxValue - minValue);
+				sliderKnob.transform.position = new Vector3 (minPos.x + length * posRatio, sliderKnob.transform.position.y, sliderKnob.transform.position.z);
+			
 			}
 		}
 	}

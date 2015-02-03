@@ -50,6 +50,8 @@
      <Compile Include="Assets\Scripts\ColourSetting.cs" />
      <Compile Include="Assets\Scripts\DrawerMovement.cs" />
      <Compile Include="Assets\Scripts\InputDetection.cs" />
+     <Compile Include="Assets\Scripts\RadioButton.cs" />
+     <Compile Include="Assets\Scripts\RadioControl.cs" />
      <Compile Include="Assets\Scripts\SliderScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
